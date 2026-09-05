@@ -1,0 +1,74 @@
+/* ============================================================
+   CAMPUS LEDGER — design tokens
+   A collegiate system: deep ink navy, warm parchment paper,
+   brass-gold accents. Evokes crests, ID cards, enrollment ledgers.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+  /* --- Palette --- */
+  --ink-900: #0b1b30;
+  --ink-800: #132a46;
+  --ink-600: #24466e;
+  --ink-100: #d7e0ea;
+  --ink-50: #eef2f7;
+
+  --parchment: #faf6ee;
+  --paper: #fffefb;
+
+  --gold-600: #a66e1e;
+  --gold-500: #c88a2e;
+  --gold-100: #f0d9ab;
+  --gold-50: #fbf3e2;
+
+  --sage-600: #3f6653;
+  --sage-50: #e9f1ec;
+
+  --rust-600: #b4472e;
+  --rust-50: #fbeae5;
+
+  /* --- Type --- */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Public Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--parchment);
+  color: var(--ink-900);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ruled-paper texture, used sparingly behind table headers / hero panels */
+.bg-ledger-rule {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    rgba(11, 27, 48, 0.06) 28px
+  );
+}
+
+/* Focus ring — visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
