@@ -19,13 +19,28 @@ import CollegeDetails from "./pages/CollegeDetails";
 import ApplyNow from "./pages/ApplyNow";
 import ApplicationStatus from "./pages/ApplicationStatus";
 
-import About from "./pages/About";
 import Administration from "./pages/Administration";
 import Admissions from "./pages/Admissions";
 import Faculty from "./pages/Faculty";
 import AuditLogs from "./pages/AuditLogs";
 import AdminProfile from "./pages/AdminProfile";
 import Reports from "./pages/Reports";
+
+import About from "./pages/About";
+import VisionMission from "./pages/VisionMission";
+import Objectives from "./pages/Objectives";
+
+import Principal from "./pages/Principal";
+import GoverningBody from "./pages/GoverningBody";
+
+import StudentNotices from "./pages/StudentNotices";
+import Scholarship from "./pages/Scholarship";
+
+import Courses from "./pages/Courses";
+import Eligibility from "./pages/Eligibility";
+
+import FacultyDepartments from "./pages/FacultyDepartments";
+import Navbar from "./components/Navbar";
 
 
 
@@ -37,10 +52,11 @@ function Layout() {
     location.pathname.startsWith("/apply/") ||
     location.pathname.startsWith("/application-status/");
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-[#FAF6EE] dark:bg-gray-950">
       {!hideSidebar && <Sidebar />}
 
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
+        <Navbar />
         <Routes>
           {/* Public */}
           <Route path="/login" element={<Login />} />
@@ -89,20 +105,42 @@ function Layout() {
               path="about"
               element={<About />}
             />
+            <Route path="about/vision-mission" element={<VisionMission />} />
+            <Route path="about/objectives" element={<Objectives />} />
 
             <Route
               path="administration"
               element={<Administration />}
+            />
+            <Route
+              path="administration/principal"
+              element={<Principal />}
+            />
+            <Route
+              path="administration/governing-body"
+              element={<GoverningBody />}
             />
 
             <Route
               path="students"
               element={<Students />}
             />
+            <Route
+              path="students/notices"
+              element={<StudentNotices />}
+            />
+            <Route
+              path="students/scholarship"
+              element={<Scholarship />}
+            />
 
             <Route
               path="faculty"
               element={<Faculty />}
+            />
+            <Route
+              path="faculty/departments"
+              element={<FacultyDepartments />}
             />
 
             <Route
@@ -111,6 +149,14 @@ function Layout() {
             />
           </Route>
 
+          <Route
+            path="admissions/courses"
+            element={<Courses />}
+          />
+          <Route
+            path="admissions/eligibility"
+            element={<Eligibility />}
+          />
           <Route
             path="/apply/:id"
             element={
@@ -179,16 +225,16 @@ function Layout() {
             }
           />
           <Route
-          path="/reports"
-          element={
-            <ProtectedRoute requiredRole="ADMIN">
-              <Reports />
-            </ProtectedRoute>
-          }
-        />
+            path="/reports"
+            element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -76,82 +76,185 @@ public class CollegeServiceImpl implements CollegeService{
 		
 	}
 
-	@Override
-	public CollegeDto updateCollege(Long id, CollegeDto dto) {
-		College existingCollege = collegeRepository.findById(id)
-	            .orElseThrow(() -> new RuntimeException("College not found"));
-
-	    // Copy DTO → Entity (only updates fields)
-//		mapper.map(dto, existingCollege);
-
-		existingCollege.setCollegeName(dto.getCollegeName());
-		existingCollege.setAddress(dto.getAddress());
-		existingCollege.setEmail(dto.getEmail());
-		existingCollege.setPhone(dto.getPhone());
-		
-        College updatedCollege = collegeRepository.save(existingCollege);
-
-		
-	    // Convert Entity → DTO
-	    return mapper.map(updatedCollege, CollegeDto.class);
-	}
+//	@Override
+//	public CollegeDto updateCollege(Long id, CollegeDto dto) {
+//		College existingCollege = collegeRepository.findById(id)
+//	            .orElseThrow(() -> new RuntimeException("College not found"));
+//
+//	    // Copy DTO → Entity (only updates fields)
+////		mapper.map(dto, existingCollege);
+//
+//		existingCollege.setCollegeName(dto.getCollegeName());
+//		existingCollege.setAddress(dto.getAddress());
+//		existingCollege.setEmail(dto.getEmail());
+//		existingCollege.setPhone(dto.getPhone());
+//		
+//        College updatedCollege = collegeRepository.save(existingCollege);
+//
+//		
+//	    // Convert Entity → DTO
+//	    return mapper.map(updatedCollege, CollegeDto.class);
+//	}
+//
+//	@Override
+//	public CollegeDto updateCollege(Long id, String collegeName, String address, String email, String phone,
+//			String course, String district, MultipartFile logo) {
+//		// TODO Auto-generated method stub
+//		//Find existing college
+//		College college = collegeRepository.findById(id)
+//				.orElseThrow(()-> new RuntimeException("College not found with this id " + id));
+//		
+//		//update normal fields
+//		college.setCollegeName(collegeName);
+//		college.setAddress(address);
+//		college.setEmail(email);
+//		college.setPhone(phone);
+//		college.setCourse(course);
+//		college.setDistrict(district);
+//		
+//		//update uploaded field
+//		if(logo != null && !logo.isEmpty()) {
+//			try {
+//				String fileName = UUID.randomUUID() + "_" + logo.getOriginalFilename();
+//				
+//				String uploadDir = System.getProperty("user.dir")
+//						+ File.separator
+//						+ "uploads"
+//						+ File.separator;
+//				
+//				File directory = new File(uploadDir);
+//				
+//				if(!directory.exists()) {
+//					directory.mkdir();
+//				}
+//				
+//				File destination = new File(uploadDir + fileName);
+//				
+//				logo.transferTo(destination);
+//				
+//				//save relative path in database
+//				college.setLogo("uploads/" + fileName);
+//			} catch (Exception e) {
+//				 throw new RuntimeException("Failed to upload college logo", e);
+//			}
+//		}
+//		
+//	    // 4. Save updated college
+//	    College updatedCollege = collegeRepository.save(college);
+//	    
+//	    auditLogService.log(
+//			    "UPDATED",
+//			    "College",
+//			    updatedCollege.getCollegeId(),
+//			    "Updated College \"" + updatedCollege.getCollegeName() + "\""
+//			);
+//		
+//
+//	    // 5. Convert Entity → DTO
+//	    return mapper.map(updatedCollege, CollegeDto.class);
+//	}
 
 	@Override
 	public CollegeDto updateCollege(Long id, String collegeName, String address, String email, String phone,
-			String course, String district, MultipartFile logo) {
-		// TODO Auto-generated method stub
-		//Find existing college
-		College college = collegeRepository.findById(id)
-				.orElseThrow(()-> new RuntimeException("College not found with this id " + id));
-		
-		//update normal fields
-		college.setCollegeName(collegeName);
-		college.setAddress(address);
-		college.setEmail(email);
-		college.setPhone(phone);
-		college.setCourse(course);
-		college.setDistrict(district);
-		
-		//update uploaded field
-		if(logo != null && !logo.isEmpty()) {
-			try {
-				String fileName = UUID.randomUUID() + "_" + logo.getOriginalFilename();
-				
-				String uploadDir = System.getProperty("user.dir")
-						+ File.separator
-						+ "uploads"
-						+ File.separator;
-				
-				File directory = new File(uploadDir);
-				
-				if(!directory.exists()) {
-					directory.mkdir();
-				}
-				
-				File destination = new File(uploadDir + fileName);
-				
-				logo.transferTo(destination);
-				
-				//save relative path in database
-				college.setLogo("uploads/" + fileName);
-			} catch (Exception e) {
-				 throw new RuntimeException("Failed to upload college logo", e);
-			}
-		}
-		
-	    // 4. Save updated college
-	    College updatedCollege = collegeRepository.save(college);
-	    
-	    auditLogService.log(
-			    "UPDATED",
-			    "College",
-			    updatedCollege.getCollegeId(),
-			    "Updated College \"" + updatedCollege.getCollegeName() + "\""
-			);
+			String course, String district, String websiteUrl, String notice, String generalNotice, String tender,
+			String objectives, String vision, String mission, String libraryInfo, String scholarshipInfo,
+			String alumniInfo, String regularCourses, String studentZone, String quickLinks, MultipartFile logo) {
 		
 
-	    // 5. Convert Entity → DTO
-	    return mapper.map(updatedCollege, CollegeDto.class);
+	    College college = collegeRepository.findById(id)
+	            .orElseThrow(() ->
+	                    new RuntimeException("College not found with this id " + id));
+
+	    // ==========================================
+	    // BASIC INFORMATION
+	    // ==========================================
+
+	    college.setCollegeName(collegeName);
+	    college.setAddress(address);
+	    college.setEmail(email);
+	    college.setPhone(phone);
+	    college.setCourse(course);
+	    college.setDistrict(district);
+	    college.setWebsiteUrl(websiteUrl);
+
+	    // ==========================================
+	    // WEBSITE INFORMATION
+	    // ==========================================
+
+	    college.setNotice(notice);
+	    college.setGeneralNotice(generalNotice);
+	    college.setTender(tender);
+
+	    college.setObjectives(objectives);
+	    college.setVision(vision);
+	    college.setMission(mission);
+
+	    college.setLibraryInfo(libraryInfo);
+	    college.setScholarshipInfo(scholarshipInfo);
+	    college.setAlumniInfo(alumniInfo);
+
+	    college.setRegularCourses(regularCourses);
+	    college.setStudentZone(studentZone);
+	    college.setQuickLinks(quickLinks);
+
+	    // ==========================================
+	    // LOGO
+	    // ==========================================
+
+	    if (logo != null && !logo.isEmpty()) {
+
+	        try {
+
+	            String fileName =
+	                    UUID.randomUUID() + "_" + logo.getOriginalFilename();
+
+	            String uploadDir =
+	                    System.getProperty("user.dir")
+	                            + File.separator
+	                            + "uploads"
+	                            + File.separator;
+
+	            File directory = new File(uploadDir);
+
+	            if (!directory.exists()) {
+	                directory.mkdirs();
+	            }
+
+	            File destination =
+	                    new File(uploadDir + fileName);
+
+	            logo.transferTo(destination);
+
+	            college.setLogo("uploads/" + fileName);
+
+	        } catch (Exception e) {
+
+	            throw new RuntimeException(
+	                    "Failed to upload college logo", e
+	            );
+	        }
+	    }
+
+	    // ==========================================
+	    // SAVE
+	    // ==========================================
+
+	    College updatedCollege =
+	            collegeRepository.save(college);
+
+	    auditLogService.log(
+	            "UPDATED",
+	            "College",
+	            updatedCollege.getCollegeId(),
+	            "Updated College \"" +
+	                    updatedCollege.getCollegeName() +
+	                    "\""
+	    );
+
+	    return mapper.map(
+	            updatedCollege,
+	            CollegeDto.class
+	    );
 	}
 	
 	

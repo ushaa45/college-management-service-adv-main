@@ -50,93 +50,335 @@ public class CollegeController {
 			@RequestParam int size){
 		return ResponseEntity.ok(collegeService.getCollegeWithPagination(page, size));		
 	}
+	
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<CollegeDto> getById(@PathVariable Long id){
 		return ResponseEntity.ok(collegeService.getCollegeById(id));
 	}
+	
+	
 
 	@PreAuthorize("hasAnyRole('ADMIN','USER')")
 	@GetMapping
 	public ResponseEntity<List<CollegeDto>> getAll(){
 		return ResponseEntity.ok(collegeService.getAllColleges());
 	}
+	
+	
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String>delete(@PathVariable Long id){
 		collegeService.deleteCollege(id);
 		return ResponseEntity.ok("Delete Successfully");
 	}
-	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping(value = "/{id}", consumes = "multipart/form-data" )
-	public ResponseEntity<CollegeDto> update(
-	        @PathVariable Long id,
-	        
-	        @RequestParam String collegeName,
-	        @RequestParam String address,
-	        @RequestParam String email,
-	        @RequestParam String phone,
-	        @RequestParam String course,
-	        @RequestParam String district,
-
-	        @RequestPart(value = "logo", required = false)
-	        MultipartFile logo) {
-
-	    return ResponseEntity.ok(collegeService.updateCollege(
-	            id,
-	            collegeName,
-	            address,
-	            email,
-	            phone,
-	            course,
-	            district,
-	            logo
-	        ));
-	}
+	
+	
+//	@PreAuthorize("hasRole('ADMIN')")
+//	@PutMapping(value = "/{id}", consumes = "multipart/form-data" )
+//	public ResponseEntity<CollegeDto> update(
+//	        @PathVariable Long id,
+//	        
+//	        @RequestParam String collegeName,
+//	        @RequestParam String address,
+//	        @RequestParam String email,
+//	        @RequestParam String phone,
+//	        @RequestParam String course,
+//	        @RequestParam String district,
+//
+//	        @RequestPart(value = "logo", required = false)
+//	        MultipartFile logo) {
+//
+//	    return ResponseEntity.ok(collegeService.updateCollege(
+//	            id,
+//	            collegeName,
+//	            address,
+//	            email,
+//	            phone,
+//	            course,
+//	            district,
+//	            logo
+//	        ));
+//	}
 	
 	@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping(value = "/add", consumes = "multipart/form-data")
-	public ResponseEntity<?> addCollege(
+	@PutMapping(
+	        value = "/{id}",
+	        consumes = "multipart/form-data"
+	)
+	public ResponseEntity<CollegeDto> update(
+
+	        @PathVariable Long id,
+
 	        @RequestParam String collegeName,
 	        @RequestParam String address,
 	        @RequestParam String email,
 	        @RequestParam String phone,
 	        @RequestParam String course,
 	        @RequestParam String district,
-	        @RequestPart(value = "logo", required = false) MultipartFile logo)
-	 {
+
+	        @RequestParam(required = false)
+	        String websiteUrl,
+
+	        @RequestParam(required = false)
+	        String notice,
+
+	        @RequestParam(required = false)
+	        String generalNotice,
+
+	        @RequestParam(required = false)
+	        String tender,
+
+	        @RequestParam(required = false)
+	        String objectives,
+
+	        @RequestParam(required = false)
+	        String vision,
+
+	        @RequestParam(required = false)
+	        String mission,
+
+	        @RequestParam(required = false)
+	        String libraryInfo,
+
+	        @RequestParam(required = false)
+	        String scholarshipInfo,
+
+	        @RequestParam(required = false)
+	        String alumniInfo,
+
+	        @RequestParam(required = false)
+	        String regularCourses,
+
+	        @RequestParam(required = false)
+	        String studentZone,
+
+	        @RequestParam(required = false)
+	        String quickLinks,
+
+	        @RequestPart(
+	                value = "logo",
+	                required = false
+	        )
+	        MultipartFile logo) {
+
+	    return ResponseEntity.ok(
+	            collegeService.updateCollege(
+	                    id,
+	                    collegeName,
+	                    address,
+	                    email,
+	                    phone,
+	                    course,
+	                    district,
+	                    websiteUrl,
+	                    notice,
+	                    generalNotice,
+	                    tender,
+	                    objectives,
+	                    vision,
+	                    mission,
+	                    libraryInfo,
+	                    scholarshipInfo,
+	                    alumniInfo,
+	                    regularCourses,
+	                    studentZone,
+	                    quickLinks,
+	                    logo
+	            )
+	    );
+	}
+	
+	
+//	@PreAuthorize("hasRole('ADMIN')")
+//	@PostMapping(value = "/add", consumes = "multipart/form-data")
+//	public ResponseEntity<?> addCollege(
+//	        @RequestParam String collegeName,
+//	        @RequestParam String address,
+//	        @RequestParam String email,
+//	        @RequestParam String phone,
+//	        @RequestParam String course,
+//	        @RequestParam String district,
+//	        @RequestPart(value = "logo", required = false) MultipartFile logo)
+//	 {
+//	    try {
+//	        String logoPath = null;
+//
+//	        if (logo != null && !logo.isEmpty()) {
+//	            String fileName = UUID.randomUUID() + "_" + logo.getOriginalFilename();
+//	            //String uploadDir = "uploads/";
+//	            String uploadDir = System.getProperty("user.dir") + File.separator + "uploads" + File.separator;
+//	            File dir = new File(uploadDir);
+//	            if (!dir.exists()) {
+//	            	dir.mkdirs();
+//	            }
+//
+//	            File destination = new File(uploadDir + fileName);
+//	            //String path = uploadDir + fileName;
+//	            logo.transferTo(destination);
+//
+//	            logoPath = "uploads/" + fileName;
+//	        }
+//
+//	        College college = new College();
+//	        college.setCollegeName(collegeName);
+//	        college.setAddress(address);
+//	        college.setEmail(email);
+//	        college.setPhone(phone);
+//	        college.setCourse(course);
+//	        college.setDistrict(district);
+//	        college.setLogo(logoPath);
+//
+//	        return ResponseEntity.ok(repository.save(college));
+//
+//	    } catch (Exception e) {
+//	    	e.printStackTrace();
+//	        return ResponseEntity.status(500).body("Upload failed");
+//	    }
+//	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping(
+	        value = "/add",
+	        consumes = "multipart/form-data"
+	)
+	public ResponseEntity<?> addCollege(
+
+	        @RequestParam String collegeName,
+	        @RequestParam String address,
+	        @RequestParam String email,
+	        @RequestParam String phone,
+	        @RequestParam String course,
+	        @RequestParam String district,
+
+	        @RequestParam(required = false)
+	        String websiteUrl,
+
+	        @RequestParam(required = false)
+	        String notice,
+
+	        @RequestParam(required = false)
+	        String generalNotice,
+
+	        @RequestParam(required = false)
+	        String tender,
+
+	        @RequestParam(required = false)
+	        String objectives,
+
+	        @RequestParam(required = false)
+	        String vision,
+
+	        @RequestParam(required = false)
+	        String mission,
+
+	        @RequestParam(required = false)
+	        String libraryInfo,
+
+	        @RequestParam(required = false)
+	        String scholarshipInfo,
+
+	        @RequestParam(required = false)
+	        String alumniInfo,
+
+	        @RequestParam(required = false)
+	        String regularCourses,
+
+	        @RequestParam(required = false)
+	        String studentZone,
+
+	        @RequestParam(required = false)
+	        String quickLinks,
+
+	        @RequestPart(
+	                value = "logo",
+	                required = false
+	        )
+	        MultipartFile logo) {
+
 	    try {
+
 	        String logoPath = null;
 
+	        // ==========================================
+	        // LOGO
+	        // ==========================================
+
 	        if (logo != null && !logo.isEmpty()) {
-	            String fileName = UUID.randomUUID() + "_" + logo.getOriginalFilename();
-	            //String uploadDir = "uploads/";
-	            String uploadDir = System.getProperty("user.dir") + File.separator + "uploads" + File.separator;
+
+	            String fileName =
+	                    UUID.randomUUID() +
+	                    "_" +
+	                    logo.getOriginalFilename();
+
+	            String uploadDir =
+	                    System.getProperty("user.dir")
+	                            + File.separator
+	                            + "uploads"
+	                            + File.separator;
+
 	            File dir = new File(uploadDir);
+
 	            if (!dir.exists()) {
-	            	dir.mkdirs();
+	                dir.mkdirs();
 	            }
 
-	            File destination = new File(uploadDir + fileName);
-	            //String path = uploadDir + fileName;
+	            File destination =
+	                    new File(uploadDir + fileName);
+
 	            logo.transferTo(destination);
 
 	            logoPath = "uploads/" + fileName;
 	        }
 
+	        // ==========================================
+	        // COLLEGE
+	        // ==========================================
+
 	        College college = new College();
+
 	        college.setCollegeName(collegeName);
 	        college.setAddress(address);
 	        college.setEmail(email);
 	        college.setPhone(phone);
 	        college.setCourse(course);
 	        college.setDistrict(district);
+	        college.setWebsiteUrl(websiteUrl);
+
+	        // ==========================================
+	        // WEBSITE INFORMATION
+	        // ==========================================
+
+	        college.setNotice(notice);
+	        college.setGeneralNotice(generalNotice);
+	        college.setTender(tender);
+
+	        college.setObjectives(objectives);
+	        college.setVision(vision);
+	        college.setMission(mission);
+
+	        college.setLibraryInfo(libraryInfo);
+	        college.setScholarshipInfo(scholarshipInfo);
+	        college.setAlumniInfo(alumniInfo);
+
+	        college.setRegularCourses(regularCourses);
+	        college.setStudentZone(studentZone);
+	        college.setQuickLinks(quickLinks);
+
 	        college.setLogo(logoPath);
 
-	        return ResponseEntity.ok(repository.save(college));
+	        College saved =
+	                repository.save(college);
+
+	        return ResponseEntity.ok(saved);
 
 	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        return ResponseEntity.status(500).body("Upload failed");
+
+	        e.printStackTrace();
+
+	        return ResponseEntity
+	                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Upload failed");
 	    }
 	}
 	

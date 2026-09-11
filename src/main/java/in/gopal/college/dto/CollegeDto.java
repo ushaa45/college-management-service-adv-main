@@ -20,5 +20,35 @@ public class CollegeDto {
 	private String district;
     private String course;
 	private String websiteUrl;
+	
+    // ==========================================
+    // COLLEGE WEBSITE INFORMATION
+    // ==========================================
+
+    private String notice;
+
+    private String generalNotice;
+
+    private String tender;
+
+    private String objectives;
+
+    private String vision;
+
+    private String mission;
+
+    private String libraryInfo;
+
+    private String scholarshipInfo;
+
+    private String alumniInfo;
+
+    private String regularCourses;
+
+    private String studentZone;
+
+    private String quickLinks;
+
+    private String logo;
 
 }

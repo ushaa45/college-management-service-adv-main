@@ -15,9 +15,34 @@ public interface CollegeService {
 	CollegeDto getCollegeById(Long id);
 	List<CollegeDto> getAllColleges();
 	void deleteCollege(Long id);
-	CollegeDto updateCollege(Long id, CollegeDto dto);
-	CollegeDto updateCollege(Long id, String collegeName, String address, String email, String phone, String course,
-			String district, MultipartFile logo);
+	//CollegeDto updateCollege(Long id, CollegeDto dto);
+	
+//	CollegeDto updateCollege(Long id, String collegeName, String address, String email, String phone, String course,
+//			String district, MultipartFile logo);
+	
+	CollegeDto updateCollege(
+	        Long id,
+	        String collegeName,
+	        String address,
+	        String email,
+	        String phone,
+	        String course,
+	        String district,
+	        String websiteUrl,
+	        String notice,
+	        String generalNotice,
+	        String tender,
+	        String objectives,
+	        String vision,
+	        String mission,
+	        String libraryInfo,
+	        String scholarshipInfo,
+	        String alumniInfo,
+	        String regularCourses,
+	        String studentZone,
+	        String quickLinks,
+	        MultipartFile logo
+	);
 	
 
 }

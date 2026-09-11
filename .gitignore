@@ -42,3 +42,7 @@ uploads/
 # Local configuration / secrets
 application-local.properties
 .env
+
+application.properties
+*.env
+.env

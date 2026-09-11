@@ -4,6 +4,7 @@ import Button from "./ui/Button";
 import { IconLogout, IconSeal } from "./ui/Icons";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -34,7 +35,14 @@ function Navbar() {
   };
 
   return (
-    <div className="flex items-center justify-between border-b border-[#D7E0EA] bg-[#FFFEFB] px-6 py-3.5">
+    <div className="
+  flex items-center justify-between
+  border-b border-[#D7E0EA]
+  bg-[#FFFEFB]
+  px-6 py-3.5
+  dark:border-gray-800
+  dark:bg-gray-950
+">
       <div>
         <p className="font-mono-num text-[11px] uppercase tracking-widest text-[#A66E1E]">
           Welcome back
@@ -51,10 +59,13 @@ function Navbar() {
             {user.role}
           </span>
         )}
-        <Button variant="outline" onClick={handleLogout}>
+        {/* 🌙 Dark / ☀️ Light mode */}
+        <ThemeToggle />
+
+        {/* <Button variant="outline" onClick={handleLogout}>
           <IconLogout />
           Logout
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

@@ -6,6 +6,31 @@ import * as yup from "yup";
 import API from "../api/axios";
 import Button from "../components/ui/Button";
 
+const districts = [
+  "Alipurduar",
+  "Bankura",
+  "Birbhum",
+  "Cooch Behar",
+  "Dakshin Dinajpur",
+  "Darjeeling",
+  "Hooghly",
+  "Howrah",
+  "Jalpaiguri",
+  "Jhargram",
+  "Kalimpong",
+  "Kolkata",
+  "Maldah",
+  "Murshidabad",
+  "Nadia",
+  "North 24 Parganas",
+  "Paschim Bardhaman",
+  "Paschim Medinipur",
+  "Purba Bardhaman",
+  "Purba Medinipur",
+  "Purulia",
+  "South 24 Parganas",
+  "Uttar Dinajpur",
+];
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -14,6 +39,7 @@ const schema = yup.object().shape({
     .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
     .required("Phone is required"),
   course: yup.string().required("Course is required"),
+  district: yup.string().required("District is required"),
 });
 
 const inputClass =
@@ -239,6 +265,30 @@ function ApplyNow() {
             <input placeholder="Previous school" className={inputClass} {...register("previousSchool")} />
             <input placeholder="Marks" className={inputClass} {...register("marks")} />
             <input placeholder="Year" className={inputClass} {...register("year")} />
+            <div>
+               <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-[#4B5566]">
+                  District
+                </label>
+              <select
+                className={inputClass}
+                {...register("district")}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select District *
+                </option>
+
+                {districts.map((district) => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
+
+              <p className="mt-1 text-xs text-[#B4472E]">
+                {errors.district?.message}
+              </p>
+            </div>
 
             <textarea placeholder="Address" className={`${inputClass} md:col-span-2`} {...register("address")} />
             <textarea placeholder="Statement of purpose" className={`${inputClass} md:col-span-2`} {...register("sop")} />

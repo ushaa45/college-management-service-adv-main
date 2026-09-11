@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ================================ GLOBAL THEME ================================ */
+html {
+    background: #faf6ee;
+    transition: background-color 0.3s ease;
+}
+
+html.dark {
+    background: #030712;
+}
+
+body {
+    margin: 0;
+    background: #faf6ee;
+    color: #0b1b30;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
+    background: #030712;
+    color: #f9fafb;
+}

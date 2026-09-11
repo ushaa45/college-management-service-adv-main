@@ -1,6 +1,12 @@
 function PageHeader({ eyebrow, title, description, action }) {
   return (
-    <div className="flex flex-col gap-4 border-b border-[#D7E0EA] pb-5 mb-6 md:flex-row md:items-end md:justify-between">
+    <div className="
+  flex flex-col gap-4
+  border-b border-[#D7E0EA]
+  pb-5 mb-6
+  md:flex-row md:items-end md:justify-between
+  dark:border-gray-800
+">
       <div>
         {eyebrow && (
           <p className="font-mono-num text-xs uppercase tracking-[0.15em] text-[#A66E1E] mb-1">

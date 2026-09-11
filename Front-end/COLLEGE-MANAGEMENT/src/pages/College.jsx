@@ -13,14 +13,41 @@ import { IconUpload } from "../components/ui/Icons";
 function College() {
   const [logo, setLogo] = useState(null);
   const [colleges, setColleges] = useState([]);
-  const [form, setForm] = useState({
+  // const [form, setForm] = useState({
+  //   collegeName: "",
+  //   address: "",
+  //   email: "",
+  //   phone: "",
+  //   course: "",
+  //   district: "",
+  // });
+  const emptyForm = {
     collegeName: "",
     address: "",
     email: "",
     phone: "",
     course: "",
     district: "",
-  });
+    websiteUrl: "",
+
+    notice: "",
+    generalNotice: "",
+    tender: "",
+
+    objectives: "",
+    vision: "",
+    mission: "",
+
+    libraryInfo: "",
+    scholarshipInfo: "",
+    alumniInfo: "",
+
+    regularCourses: "",
+    studentZone: "",
+    quickLinks: "",
+  };
+
+  const [form, setForm] = useState(emptyForm);
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -77,6 +104,19 @@ function College() {
       formData.append("phone", form.phone);
       formData.append("course", form.course);
       formData.append("district", form.district);
+      formData.append("websiteUrl", form.websiteUrl);
+      formData.append("notice", form.notice);
+      formData.append("generalNotice", form.generalNotice);
+      formData.append("tender", form.tender);
+      formData.append("objectives", form.objectives);
+      formData.append("vision", form.vision);
+      formData.append("mission", form.mission);
+      formData.append("libraryInfo", form.libraryInfo);
+      formData.append("scholarshipInfo", form.scholarshipInfo);
+      formData.append("alumniInfo", form.alumniInfo);
+      formData.append("regularCourses", form.regularCourses);
+      formData.append("studentZone", form.studentZone);
+      formData.append("quickLinks", form.quickLinks);
       if (logo) formData.append("logo", logo);
 
       if (editingId) {
@@ -89,7 +129,9 @@ function College() {
         });
       }
 
-      setForm({ collegeName: "", address: "", email: "", phone: "", course: "", district: "" });
+      setForm(emptyForm);
+
+      //setForm({ collegeName: "", address: "", email: "", phone: "", course: "", district: "" });
       setLogo(null);
       setEditingId(null);
       fetchColleges();
@@ -119,10 +161,10 @@ function College() {
     const confirmDelete = window.confirm("Are you sure you want to delete this college? This action cannot be undone.");
     if (!confirmDelete) return;
 
-    if(!id){
+    if (!id) {
       console.error("College ID is required to delete a college.");
       return;
-    } 
+    }
     try {
       await API.delete(`/api/college/${id}`);
       fetchColleges();
@@ -131,28 +173,69 @@ function College() {
     }
   }
 
+  // const editCollege = (college) => {
+  //   setForm({
+  //     collegeName: college.collegeName,
+  //     address: college.address,
+  //     email: college.email,
+  //     phone: college.phone,
+  //     course: college.course,
+  //     district: college.district,
+  //   });
+  //   const id = college.collegeId || college.id || college.college_id;
+  //   setEditingId(id);
+  // };
+
   const editCollege = (college) => {
+
     setForm({
-      collegeName: college.collegeName,
-      address: college.address,
-      email: college.email,
-      phone: college.phone,
-      course: college.course,
-      district: college.district,
+      collegeName: college.collegeName || "",
+      address: college.address || "",
+      email: college.email || "",
+      phone: college.phone || "",
+      course: college.course || "",
+      district: college.district || "",
+      websiteUrl: college.websiteUrl || "",
+
+      notice: college.notice || "",
+      generalNotice: college.generalNotice || "",
+      tender: college.tender || "",
+
+      objectives: college.objectives || "",
+      vision: college.vision || "",
+      mission: college.mission || "",
+
+      libraryInfo: college.libraryInfo || "",
+      scholarshipInfo: college.scholarshipInfo || "",
+      alumniInfo: college.alumniInfo || "",
+
+      regularCourses: college.regularCourses || "",
+      studentZone: college.studentZone || "",
+      quickLinks: college.quickLinks || "",
     });
-    const id = college.collegeId || college.id || college.college_id;
+
+    const id =
+      college.collegeId ||
+      college.id ||
+      college.college_id;
+
     setEditingId(id);
   };
 
+  // const cancelEdit = () => {
+  //   setEditingId(null);
+  //   setForm({ collegeName: "", address: "", email: "", phone: "", course: "", district: "" });
+  //   setErrors({});
+  // };
+
   const cancelEdit = () => {
     setEditingId(null);
-    setForm({ collegeName: "", address: "", email: "", phone: "", course: "", district: "" });
+    setForm(emptyForm);
+    setLogo(null);
     setErrors({});
   };
-
   const inputClass = (field) =>
-    `w-full rounded-md border bg-[#FFFEFB] px-3 py-2 text-sm text-[#0b1b30] outline-none transition focus:ring-2 focus:ring-[#C88A2E]/30 ${
-      errors[field] ? "border-[#B4472E]" : "border-[#D7E0EA] focus:border-[#C88A2E]"
+    `w-full rounded-md border bg-[#FFFEFB] px-3 py-2 text-sm text-[#0b1b30] outline-none transition focus:ring-2 focus:ring-[#C88A2E]/30 ${errors[field] ? "border-[#B4472E]" : "border-[#D7E0EA] focus:border-[#C88A2E]"
     }`;
 
   return (
@@ -234,6 +317,223 @@ function College() {
               {errors.district && <p className="mt-1 text-xs text-[#B4472E]">{errors.district}</p>}
             </div>
 
+            {/* WEBSITE */}
+
+            <div>
+              <input
+                className={inputClass("websiteUrl")}
+                placeholder="College website URL"
+                value={form.websiteUrl}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    websiteUrl: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* NOTICE */}
+
+            <div className="md:col-span-3">
+              <textarea
+                className={`${inputClass("notice")} min-h-[100px]`}
+                placeholder="Notice"
+                value={form.notice}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    notice: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* GENERAL NOTICE */}
+
+            <div className="md:col-span-3">
+              <textarea
+                className={`${inputClass("generalNotice")} min-h-[100px]`}
+                placeholder="General Notice"
+                value={form.generalNotice}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    generalNotice: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* TENDER */}
+
+            <div className="md:col-span-3">
+              <textarea
+                className={`${inputClass("tender")} min-h-[100px]`}
+                placeholder="Tender Information"
+                value={form.tender}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    tender: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            {/* OBJECTIVES */}
+
+            <div>
+              <textarea
+                className={`${inputClass("objectives")} min-h-[120px]`}
+                placeholder="Objectives"
+                value={form.objectives}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    objectives: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* VISION */}
+
+            <div>
+              <textarea
+                className={`${inputClass("vision")} min-h-[120px]`}
+                placeholder="Vision"
+                value={form.vision}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    vision: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* MISSION */}
+
+            <div>
+              <textarea
+                className={`${inputClass("mission")} min-h-[120px]`}
+                placeholder="Mission"
+                value={form.mission}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    mission: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            {/* LIBRARY */}
+
+            <div>
+              <textarea
+                className={`${inputClass("libraryInfo")} min-h-[120px]`}
+                placeholder="Library Information"
+                value={form.libraryInfo}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    libraryInfo: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* SCHOLARSHIP */}
+
+            <div>
+              <textarea
+                className={`${inputClass("scholarshipInfo")} min-h-[120px]`}
+                placeholder="Scholarship Information"
+                value={form.scholarshipInfo}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    scholarshipInfo: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* ALUMNI */}
+
+            <div>
+              <textarea
+                className={`${inputClass("alumniInfo")} min-h-[120px]`}
+                placeholder="Alumni Information"
+                value={form.alumniInfo}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    alumniInfo: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            {/* REGULAR COURSES */}
+
+            <div>
+              <textarea
+                className={`${inputClass("regularCourses")} min-h-[120px]`}
+                placeholder="Regular Courses"
+                value={form.regularCourses}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    regularCourses: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* STUDENT ZONE */}
+
+            <div>
+              <textarea
+                className={`${inputClass("studentZone")} min-h-[120px]`}
+                placeholder="Student Zone"
+                value={form.studentZone}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    studentZone: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+
+            {/* QUICK LINKS */}
+
+            <div>
+              <textarea
+                className={`${inputClass("quickLinks")} min-h-[120px]`}
+                placeholder="Quick Links"
+                value={form.quickLinks}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    quickLinks: e.target.value,
+                  })
+                }
+              />
+            </div>
+
             <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-[#D7E0EA] bg-[#EEF2F7] px-3 py-2 text-sm text-[#4B5566] transition hover:border-[#C88A2E]">
               <IconUpload />
               {logo ? logo.name : "Upload logo"}
@@ -266,7 +566,7 @@ function College() {
               <th className="p-3">District</th>
               {user.role === "ADMIN" && (
                 <th className="p-3 pr-5 text-right">Actions</th>
-              )}  
+              )}
             </tr>
           </thead>
           <tbody>
@@ -283,30 +583,30 @@ function College() {
                 <td className="p-3 text-[#4B5566]">{c.course}</td>
                 <td className="p-3 text-[#4B5566]">{c.district}</td>
                 {user.role === "ADMIN" && (
-                <td className="p-3 pr-5 text-right">
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      variant="outline"
-                      className="!px-3 !py-1 text-xs"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        editCollege(c);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      className="!px-3 !py-1 text-xs"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteCollege(c.collegeId);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </td>
+                  <td className="p-3 pr-5 text-right">
+                    <div className="flex justify-end gap-2">
+                      <Button
+                        variant="outline"
+                        className="!px-3 !py-1 text-xs"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          editCollege(c);
+                        }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="!px-3 !py-1 text-xs"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteCollege(c.collegeId);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </td>
                 )}
               </tr>
             ))}

@@ -1,14 +1,26 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import CollegeFooter from "../components/CollegeFooter";
 
 function About() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.getElementById(location.hash.replace("#", ""));
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [location.hash]);
 
   return (
     <div className="min-h-screen bg-[#FAF6EE]">
       {/* HERO */}
-      <div className="relative h-[380px] w-full overflow-hidden">
+      <div id="overview"  className="relative h-[380px] w-full overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1562774053-701939374585"
           alt="campus"
@@ -62,8 +74,36 @@ function About() {
         </div>
       </div>
 
+      {/* VISION & MISSION */}
+      <div
+        id="vision-mission"
+        className="border-y border-[#D7E0EA] bg-[#FFFEFB] px-6 py-14 scroll-mt-24"
+      >
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+          <div className="rounded-lg border border-[#D7E0EA] border-t-4 border-t-[#C88A2E] bg-[#FAF6EE] p-6">
+            <h3 className="font-display mb-3 text-xl font-semibold text-[#0b1b30]">
+              Vision
+            </h3>
+            <p className="text-sm leading-relaxed text-[#4B5566]">
+              To be a center of academic excellence that nurtures critical
+              thinking, innovation, and lifelong learning.
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-[#D7E0EA] border-t-4 border-t-[#3F6653] bg-[#FAF6EE] p-6">
+            <h3 className="font-display mb-3 text-xl font-semibold text-[#0b1b30]">
+              Mission
+            </h3>
+            <p className="text-sm leading-relaxed text-[#4B5566]">
+              To provide quality education, foster research, and build
+              responsible citizens equipped for real-world challenges.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* FEATURES */}
-      <div className="border-y border-[#D7E0EA] bg-[#FFFEFB] px-6 py-14">
+      <div id="objectives" className="border-y border-[#D7E0EA] bg-[#FFFEFB] px-6 py-14">
         <h2 className="font-display mb-10 text-center text-2xl font-semibold text-[#0b1b30]">
           Why choose us
         </h2>

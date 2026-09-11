@@ -35,6 +35,52 @@ public class College {
 	    // ADD THESE FOR SEARCH
 	    private String district;
 	    private String course;
+	    
+	    private String websiteUrl;
+	    
+	    // ==========================================
+	    // COLLEGE WEBSITE INFORMATION
+	    // ==========================================
+	    
+	    @Column(columnDefinition = "TEXT")
+	    private String notice;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String generalNotice;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String tender;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String objectives;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String vision;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String mission;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String libraryInfo;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String scholarshipInfo;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String alumniInfo;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String regularCourses;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String studentZone;
+
+	    @Column(columnDefinition = "TEXT")
+	    private String quickLinks;
+	    
+	    // ==========================================
+	    // RELATIONSHIPS
+	    // ==========================================
 
 	    @OneToMany(mappedBy = "college", cascade = CascadeType.ALL)
 	    private List<Student> students;
@@ -44,6 +90,10 @@ public class College {
 
 	    @OneToMany(mappedBy = "college", cascade = CascadeType.ALL)
 	    private List<Hostel> hostels;
+	    
+	    // ==========================================
+	    // LOGO
+	    // ==========================================
 	    
 	    @Column(name = "logo")
 	    private String logo;
